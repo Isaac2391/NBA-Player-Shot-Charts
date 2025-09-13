@@ -215,15 +215,16 @@ def generateShotGraph(PlayerName,MadeDF,MissedDF):
     plt.gca().add_artist(legend1)
     
     plt.title=(f"{PlayerName} Shot Chart")
+    
     plt.show()
-        
 
-PlayerName = input("What is the name of the player? ")
-PlayerID = players.find_players_by_full_name(PlayerName)[0]['id'] 
-PlayerTeamID = playerDictionary[PlayerID]
 
-SelectedPlayer = Player(PlayerName,PlayerID,PlayerTeamID)
+def renderGraph(PlayerName,Season): 
+    PlayerID = players.find_players_by_full_name(PlayerName)[0]['id']
+    PlayerTeamID = playerDictionary[PlayerID]
+    SelectedPlayer = Player(PlayerName,PlayerID,PlayerTeamID)
+    PlayerMadeShots,PlayerMissedShots = SelectedPlayer.retrieveShotCoordinates(Season)
+    generateShotGraph(PlayerName,PlayerMadeShots,PlayerMissedShots)
 
-PlayerMadeShots,PlayerMissedShots = SelectedPlayer.retrieveShotCoordinates('2023-24')
-generateShotGraph(PlayerName,PlayerMadeShots,PlayerMissedShots)
+
 
