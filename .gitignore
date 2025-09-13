@@ -1,10 +1,18 @@
-# Python
+# Byte-compiled / optimized / DLL files
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
 
-# Node
-node_modules/
+# Virtual environment
+venv/
+env/
 
-# OS files
-.DS_Store
-Thumbs.db
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# IDEs and editors
+.vscode/
+.idea/
+
