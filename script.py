@@ -7,10 +7,10 @@ from matplotlib.patches import Circle, Rectangle, Arc
 
 from nba_api.stats.endpoints import CommonAllPlayers
 from nba_api.stats.endpoints import shotchartdetail
+from nba_api.stats.endpoints import PlayerCareerStats
 
 from nba_api.stats.static import teams 
 from nba_api.stats.static import players 
-
 
 def GatherAllPlayerInfo(): 
     
@@ -72,8 +72,30 @@ class Player:
         
      MadeShotsDF = pd.DataFrame(MadeShotsLst, columns=['LOC_X', 'LOC_Y'])
      MissedShotsDF = pd.DataFrame(MissedShotsLst, columns=['LOC_X', 'LOC_Y'])        
-     
      return (MadeShotsDF,MissedShotsDF)
+    
+    def retrieveMetricsInfo(self):
+        
+        PlayerStats = PlayerCareerStats(player_id=self.playerID)
+        PlayerStatsInfo = PlayerStats.career_totals_regular_season.get_data_frame()
+        print(PlayerStatsInfo.columns)
+        
+        PlayerFieldGoal = PlayerStatsInfo['FGM']
+        PlayerThreePoint = PlayerStatsInfo['FG3M']
+        PlayerFieldGoalAttempts = PlayerStatsInfo['FGA']
+        PlayerPoints = PlayerStatsInfo['PTS']
+        PlayerFreeThrowAttempts = PlayerStatsInfo['FTA']
+        PlayerFreeThrow = PlayerStatsInfo['FTM']
+        PlayerAssists = PlayerStatsInfo['AST']
+        PlayerTurnovers = PlayerStatsInfo['TOV']
+        
+        EffectiveFieldGoalPercentage = (PlayerFieldGoal + ( .5 * PlayerThreePoint)) / PlayerFieldGoalAttempts
+        TrueShootingPercentage = PlayerPoints / ( 2 * ( PlayerFieldGoalAttempts + .475 * PlayerFreeThrowAttempts))
+        FreeThrowRate = PlayerFreeThrow / PlayerFieldGoalAttempts
+        HollingerAssistRatio = PlayerAssists / ( PlayerFieldGoalAttempts + ( .475 * PlayerFreeThrowAttempts) + PlayerAssists + PlayerTurnovers )
+        TurnoverPercentage = PlayerTurnovers / ( PlayerFieldGoalAttempts + ( .475*PlayerFreeThrowAttempts) + PlayerAssists + PlayerTurnovers)
+        
+        return (EffectiveFieldGoalPercentage,TrueShootingPercentage,FreeThrowRate,HollingerAssistRatio,TurnoverPercentage)
 
 def draw_court(ax=None, color='black', lw=2, outer_lines=False):
     # If an axes object isn't provided to plot onto, just get current one
@@ -218,7 +240,6 @@ def generateShotGraph(PlayerName,MadeDF,MissedDF):
     
     plt.show()
 
-
 def renderGraph(PlayerName,Season): 
     PlayerID = players.find_players_by_full_name(PlayerName)[0]['id']
     PlayerTeamID = playerDictionary[PlayerID]
@@ -226,5 +247,11 @@ def renderGraph(PlayerName,Season):
     PlayerMadeShots,PlayerMissedShots = SelectedPlayer.retrieveShotCoordinates(Season)
     generateShotGraph(PlayerName,PlayerMadeShots,PlayerMissedShots)
 
-
-
+def renderStats(PlayerName):
+    
+    PlayerID = players.find_players_by_full_name(PlayerName)[0]['id']
+    PlayerTeamID = playerDictionary[PlayerID]
+    SelectedPlayer = Player(PlayerName,PlayerID,PlayerTeamID)
+    EFGPerc,TrueShootingPerc,FreeThrowRate,HollingerAstRatio,TurnoverPerc = SelectedPlayer.retrieveMetricsInfo()
+    
+    return ( (f"{round(EFGPerc[0],3)}%"), (f"{round(TrueShootingPerc[0],3)}%"), (f"{round(FreeThrowRate[0],3)}%"), (f"{round(HollingerAstRatio[0],3)}%"), (f"{round(TurnoverPerc[0],3)}%") )
