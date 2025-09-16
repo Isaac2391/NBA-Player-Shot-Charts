@@ -2,6 +2,7 @@
 Python project that can create and display hexbin Shooting Charts for NBA Players
 
 <img width="610" height="746" alt="image" src="https://github.com/user-attachments/assets/694006f1-7535-4b1c-a083-c177f1581fad" />
+<img width="846" height="901" alt="image" src="https://github.com/user-attachments/assets/1e3213d1-2b65-487b-a6af-2b489349269e" />
 <img width="668" height="790" alt="image" src="https://github.com/user-attachments/assets/6f66fb78-8f5e-4a1c-a115-4e80638a1a90" />
 
 Features im planning to add; 
