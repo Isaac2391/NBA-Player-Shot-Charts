@@ -182,7 +182,7 @@ def generateShotGraph(PlayerName,MadeDF,MissedDF):
 
     shots_hex = plt.hexbin(
         TotalShotsDF['LOC_X'], TotalShotsDF['LOC_Y'],
-        extent=(-250, 250, -47.5, 422.5), cmap='Blues', gridsize=40)
+        extent=(-250, 250, -47.5, 422.5), cmap='Greens', gridsize=40)
     plt.close()
     
     makes_df = MadeDF
@@ -213,7 +213,7 @@ def generateShotGraph(PlayerName,MadeDF,MissedDF):
     plt.figure(figsize=(5, 4.7))
     plt.ylim(-47.5, 422.5)
     plt.xlim(-250, 250)
-    FinalChart = plt.scatter(x, y, c=z, s=sizes,cmap='Blues', marker='h')
+    FinalChart = plt.scatter(x, y, c=z, s=sizes,cmap='Greens', marker='h')
     
     draw_court(outer_lines=True)
     
