@@ -14,6 +14,11 @@ try:
          st.pyplot(plt)
 except(IndexError):
     st.header("Couldnt Find Player Name (mispelled or nickname instead of actual name?)")
+    st.stop()
+except(KeyError):
+    st.header("Please format the season date correctly")
+    st.stop()
+    
 
 EFGPerc,TrueShootingPerc,FreeThrowRate,HollingerAstRatio,TurnoverPerc = script.renderStats(player_name)
 

@@ -248,10 +248,14 @@ def renderGraph(PlayerName,Season):
     generateShotGraph(PlayerName,PlayerMadeShots,PlayerMissedShots)
 
 def renderStats(PlayerName):
-    
-    PlayerID = players.find_players_by_full_name(PlayerName)[0]['id']
-    PlayerTeamID = playerDictionary[PlayerID]
-    SelectedPlayer = Player(PlayerName,PlayerID,PlayerTeamID)
-    EFGPerc,TrueShootingPerc,FreeThrowRate,HollingerAstRatio,TurnoverPerc = SelectedPlayer.retrieveMetricsInfo()
-    
-    return ( (f"{round(EFGPerc[0],3)}%"), (f"{round(TrueShootingPerc[0],3)}%"), (f"{round(FreeThrowRate[0],3)}%"), (f"{round(HollingerAstRatio[0],3)}%"), (f"{round(TurnoverPerc[0],3)}%") )
+    try:
+        PlayerID = players.find_players_by_full_name(PlayerName)[0]['id']
+        PlayerTeamID = playerDictionary[PlayerID]
+        SelectedPlayer = Player(PlayerName,PlayerID,PlayerTeamID)
+        EFGPerc,TrueShootingPerc,FreeThrowRate,HollingerAstRatio,TurnoverPerc = SelectedPlayer.retrieveMetricsInfo()
+        
+        return ( (f"{round(EFGPerc[0],3)}%"), (f"{round(TrueShootingPerc[0],3)}%"),
+                (f"{round(FreeThrowRate[0],3)}%"), (f"{round(HollingerAstRatio[0],3)}%"),
+                (f"{round(TurnoverPerc[0],3)}%") )
+    except(IndexError):
+        pass
