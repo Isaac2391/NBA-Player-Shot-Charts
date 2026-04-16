@@ -1,5 +1,9 @@
 # NBA-Player-Shot-Charts
-Python project that can create and display hexbin Shooting Charts for NBA Players
+Python project that can create and display hexbin Shooting Charts for NBA Players. Some of the year/player combinations will be empty.
+
+https://isaac2391-nba-player-shot-charts-dashboard-3ib0zb.streamlit.app/
+
+Cant find the source for where I got the draw court function but it was from a Medium article
 
 <img width="610" height="746" alt="image" src="https://github.com/user-attachments/assets/694006f1-7535-4b1c-a083-c177f1581fad" />
 <img width="846" height="901" alt="image" src="https://github.com/user-attachments/assets/1e3213d1-2b65-487b-a6af-2b489349269e" />
